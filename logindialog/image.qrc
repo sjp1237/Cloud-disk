@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/balckButton.png</file>
+        <file>res/login_bk.jpg</file>
+        <file>res/login_close.png</file>
+        <file>res/login_min.png</file>
+        <file>res/login_setting.png</file>
+    </qresource>
+</RCC>
