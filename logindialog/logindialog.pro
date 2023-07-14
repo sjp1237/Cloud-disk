@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT+=network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,11 +28,16 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         dialog.cpp \
-    titlewidget.cpp
+    titlewidget.cpp \
+    common.cpp \
+    des.c
 
 HEADERS += \
         dialog.h \
-    titlewidget.h
+    titlewidget.h \
+    common.h \
+    C:/Users/A/Desktop/des.h \
+    des.h
 
 FORMS += \
         dialog.ui \

@@ -2,7 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
-
+#include"common.h"
 namespace Ui {
 class Dialog;
 }
@@ -26,9 +26,13 @@ private slots:
     void closePage();
     void on_toolButton_clicked();
 
+    void on_login_toolButton_clicked();
+
+    void on_toolButton_3_clicked();
+
 private:
     Ui::Dialog *ui;
-
+    Common* m_common;
     void paintEvent(QPaintEvent*);
 };
 
