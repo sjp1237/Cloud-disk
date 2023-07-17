@@ -1,0 +1,17 @@
+debug/main.o
+debug/dialog.o
+debug/titlewidget.o
+debug/common.o
+debug/des.o
+debug/mainwindow.o
+debug/buttongroup.o
+debug/myfile.o
+debug/mymenu.o
+debug/analyjsondata.o
+debug/qrc_image.o
+debug/moc_dialog.o
+debug/moc_titlewidget.o
+debug/moc_mainwindow.o
+debug/moc_buttongroup.o
+debug/moc_myfile.o
+debug/moc_analyjsondata.o

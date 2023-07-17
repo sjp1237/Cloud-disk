@@ -210,6 +210,7 @@ Makefile: logindialog.pro C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/win32-
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/qt_config.prf \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/win32-g++/qmake.conf \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/exclusive_builds.prf \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/toolchain.prf \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/default_pre.prf \
@@ -235,6 +236,7 @@ Makefile: logindialog.pro C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/win32-
 		logindialog.pro \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/Qt5Widgets.prl \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/Qt5Gui.prl \
+		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/Qt5Network.prl \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/Qt5Core.prl \
 		C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/qtmaind.prl
 	$(QMAKE) -o Makefile logindialog.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -387,6 +389,7 @@ C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/qt_functions.prf:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/qt_config.prf:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/win32-g++/qmake.conf:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/exclusive_builds.prf:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/toolchain.prf:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/default_pre.prf:
@@ -412,6 +415,7 @@ C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/mkspecs/features/lex.prf:
 logindialog.pro:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/Qt5Widgets.prl:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/Qt5Gui.prl:
+C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/Qt5Network.prl:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/Qt5Core.prl:
 C:/Qt/Qt5.12.0/5.12.1/5.12.0/mingw73_64/lib/qtmaind.prl:
 qmake: FORCE

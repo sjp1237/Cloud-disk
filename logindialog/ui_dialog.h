@@ -22,7 +22,7 @@
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include <titlewidget.h>
+#include "titlewidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -102,7 +102,7 @@ public:
     QWidget *widget_7;
     QHBoxLayout *horizontalLayout_5;
     QSpacerItem *horizontalSpacer_8;
-    QToolButton *toolButton_3;
+    QToolButton *reg_but;
     QSpacerItem *horizontalSpacer_9;
     QSpacerItem *horizontalSpacer_7;
 
@@ -488,12 +488,12 @@ public:
 
         horizontalLayout_5->addItem(horizontalSpacer_8);
 
-        toolButton_3 = new QToolButton(widget_7);
-        toolButton_3->setObjectName(QString::fromUtf8("toolButton_3"));
-        toolButton_3->setMinimumSize(QSize(120, 50));
-        toolButton_3->setStyleSheet(QString::fromUtf8("border-image: url(:/res/balckButton.png);"));
+        reg_but = new QToolButton(widget_7);
+        reg_but->setObjectName(QString::fromUtf8("reg_but"));
+        reg_but->setMinimumSize(QSize(120, 50));
+        reg_but->setStyleSheet(QString::fromUtf8("border-image: url(:/res/balckButton.png);"));
 
-        horizontalLayout_5->addWidget(toolButton_3);
+        horizontalLayout_5->addWidget(reg_but);
 
         horizontalSpacer_9 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -541,7 +541,7 @@ public:
         label_6->setText(QApplication::translate("Dialog", "\347\241\256\350\256\244\345\257\206\347\240\201", nullptr));
         label->setText(QApplication::translate("Dialog", "\347\224\250\346\210\267\345\220\215", nullptr));
         toolButton_4->setText(QApplication::translate("Dialog", "\345\267\262\346\234\211\350\264\246\345\217\267\357\274\214\350\277\224\345\233\236\347\231\273\345\275\225", nullptr));
-        toolButton_3->setText(QApplication::translate("Dialog", "\346\263\250\345\206\214", nullptr));
+        reg_but->setText(QApplication::translate("Dialog", "\346\263\250\345\206\214", nullptr));
     } // retranslateUi
 
 };

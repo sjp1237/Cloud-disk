@@ -1,0 +1,17 @@
+release/main.o
+release/dialog.o
+release/titlewidget.o
+release/common.o
+release/des.o
+release/mainwindow.o
+release/buttongroup.o
+release/myfile.o
+release/mymenu.o
+release/analyjsondata.o
+release/qrc_image.o
+release/moc_dialog.o
+release/moc_titlewidget.o
+release/moc_mainwindow.o
+release/moc_buttongroup.o
+release/moc_myfile.o
+release/moc_analyjsondata.o

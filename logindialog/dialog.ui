@@ -617,7 +617,7 @@ color:rgb(255, 103, 1)</string>
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton_3">
+           <widget class="QToolButton" name="reg_but">
             <property name="minimumSize">
              <size>
               <width>120</width>
@@ -672,7 +672,7 @@ color:rgb(255, 103, 1)</string>
   <customwidget>
    <class>titleWidget</class>
    <extends>QWidget</extends>
-   <header location="global">titlewidget.h</header>
+   <header>titlewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

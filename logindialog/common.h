@@ -6,6 +6,7 @@
 #include<QJsonDocument>
 #include<QJsonObject>
 #include<QDebug>
+#include<QByteArray>
 #define USER_REG        "^[a-zA-Z\\d_@#-\*]\{3,16\}$"    //用户名
 #define PASSWD_REG      "^[a-zA-Z\\d_@#-\*]\{6,18\}$"
 #define PHONE_REG       "1\\d\{10\}"

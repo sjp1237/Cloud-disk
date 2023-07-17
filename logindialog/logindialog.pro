@@ -30,19 +30,31 @@ SOURCES += \
         dialog.cpp \
     titlewidget.cpp \
     common.cpp \
-    des.c
+    des.c \
+    mainwindow.cpp \
+    buttongroup.cpp \
+    myfile.cpp \
+    mymenu.cpp \
+    analyjsondata.cpp
 
 HEADERS += \
         dialog.h \
     titlewidget.h \
     common.h \
     C:/Users/A/Desktop/des.h \
-    des.h
+    des.h \
+    mainwindow.h \
+    buttongroup.h \
+    myfile.h \
+    mymenu.h \
+    analyjsondata.h
 
 FORMS += \
         dialog.ui \
     titlewidget.ui \
-    titlewidget.ui
+    mainwindow.ui \
+    buttongroup.ui \
+    myfile.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
