@@ -7,6 +7,7 @@
 #include<QJsonObject>
 #include<QDebug>
 #include<QByteArray>
+#include<QNetworkAccessManager>
 #define USER_REG        "^[a-zA-Z\\d_@#-\*]\{3,16\}$"    //用户名
 #define PASSWD_REG      "^[a-zA-Z\\d_@#-\*]\{6,18\}$"
 #define PHONE_REG       "1\\d\{10\}"
@@ -20,6 +21,7 @@
 class Common
 {
     static Common* instant;
+    QNetworkAccessManager* m_manger;
 public:
     Common();
     static Common* getInstant();
@@ -35,5 +37,7 @@ public:
 
     //md5加密字符串
     QString getStrMd5(QString str);
+
+    QNetworkAccessManager* getNetworkManger();
 };
 #endif // COMMON_H

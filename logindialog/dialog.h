@@ -23,6 +23,10 @@ public:
 
 
     void readConf();
+    void saveLoginInfoData(QString username, QString token, QString ip, QString port);
+
+
+    void showMainWindow(QString account);//显示云盘主界面
 private slots:
     void on_register_toolButton_clicked();
 
@@ -45,6 +49,7 @@ private slots:
 private:
     Ui::Dialog *ui;
     Common* m_common;
+    QNetworkAccessManager* manger;
 
     MainWindow* mainwindow;
     void paintEvent(QPaintEvent*);

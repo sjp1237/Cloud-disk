@@ -8,13 +8,13 @@
 #include<QNetworkRequest>
 #include<QNetworkReply>
 #include"des.h"
+#include"logininfoinstance.h"
+
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
-    mainwindow=new MainWindow();
-
-
     ui->setupUi(this);
     //去掉标题栏
     this->setWindowFlags(Qt::FramelessWindowHint | windowFlags());
@@ -24,15 +24,26 @@ Dialog::Dialog(QWidget *parent) :
     connect(ui->widget,&titleWidget::switchSettingPage,this,&Dialog::switchSettingPage);
     connect(ui->widget,&titleWidget::hidePage,this,&Dialog::hidePage);
     connect(ui->widget,&titleWidget::closePage,this,&Dialog::closePage);
+
+  //  connect(ui->reg_but,&QToolButton::clicked,this,&Dialog::on_toolButton_3_clicked);
+    m_common=Common::getInstant();
+    manger=m_common->getNetworkManger();
+    readConf();
+    qDebug()<<"加载文件成功";
+}
+
+//创建主界面，并显示主界面
+void Dialog::showMainWindow(QString account)
+{
+    //显示主页面
+    mainwindow=new MainWindow();
+    mainwindow->setUser(account);
+    mainwindow->show();
+    this->hide();
     connect(mainwindow,&MainWindow::switchUser,this,[=](){
         mainwindow->hide();
         this->show();
     });
-  //  connect(ui->reg_but,&QToolButton::clicked,this,&Dialog::on_toolButton_3_clicked);
-    m_common=Common::getInstant();
-
-    readConf();
-    qDebug()<<"加载文件成功";
 }
 
 Dialog::~Dialog()
@@ -111,8 +122,6 @@ void Dialog::on_login_toolButton_clicked()
         return;
     }
 
-    //
-    QNetworkAccessManager* manger=new QNetworkAccessManager();
     //封装http请求
     QNetworkRequest request;
     //从配置文件中获取到ip地址和port端口号
@@ -126,8 +135,8 @@ void Dialog::on_login_toolButton_clicked()
     //将data数据以QJson的格式发送给服务器
 
     QJsonObject object;
-    object.insert("account", account);
-    object.insert("password",  m_common->getStrMd5(password));
+    object.insert("user", account);
+    object.insert("pwd",  m_common->getStrMd5(password));
 
     QJsonDocument doc(object);
     QByteArray data=doc.toJson();
@@ -154,14 +163,20 @@ void Dialog::on_login_toolButton_clicked()
         if(value1=="000"){
 
             //登录成功
+            //0.获取token，将用户信息写入到logininstant中。
             //1.判断有没有记住密码，如果有记住密码，获取记住密码的状态
             //2.将账号和密码信息记录到配置文件中
             //3.显示登录成功页面（主页面）
 
+             //获取token
+            QString token=object1["token"].toString();
+                qDebug()<<"token:"<<token;
+            //获取token，将用户信息写入到logininstant中。
+            saveLoginInfoData(account,token,ip,port);
 
-          //  QMessageBox::information(this,"登录成功","账号登录成功");
+
+            // QMessageBox::information(this,"登录成功","账号登录成功");
             //判断有没有记住密码
-
             bool checkBox=ui->rember_checkBox->isChecked();
             if(checkBox==false)
             {
@@ -173,10 +188,7 @@ void Dialog::on_login_toolButton_clicked()
             m_common->writeLoginInfo(account,password,checkBox);
             //获取
 
-            //显示主页面
-            mainwindow->setUser(account);
-            mainwindow->show();
-            this->hide();
+           showMainWindow(account);
         }
 
         if(value1=="001"){
@@ -186,6 +198,16 @@ void Dialog::on_login_toolButton_clicked()
 
 }
 
+//将登录的用户信息写入到logininfoinstance中
+void Dialog::saveLoginInfoData(QString username, QString token, QString ip, QString port)
+{
+    logininfoinstance* instant=logininfoinstance::getInstant();
+
+    instant->setIp(ip);
+    instant->setToken(token);
+    instant->setUser(username);
+    instant->setPort(port);
+}
 
 
 //读取配置文件信息，将账号密码，服务器端口号写到界面中
@@ -221,6 +243,7 @@ void Dialog::on_login_toolButton_clicked()
          }
 
          //账号解密成功，将账号显示到登录窗口
+
          QString s1=QString::fromLocal8Bit((const char*)pwd,pwd_len);
          ui->password_edit->setText(s1);
      }

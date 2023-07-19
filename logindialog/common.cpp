@@ -5,9 +5,13 @@
 #include<QMessageBox>
 Common::Common()
 {
-
+    m_manger=new QNetworkAccessManager;
 }
 
+ QNetworkAccessManager* Common::getNetworkManger()
+ {
+     return m_manger;
+ }
 Common* Common::instant=new Common();
 Common* Common::getInstant()
 {

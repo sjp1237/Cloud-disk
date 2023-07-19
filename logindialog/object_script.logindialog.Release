@@ -8,6 +8,8 @@ release/buttongroup.o
 release/myfile.o
 release/mymenu.o
 release/analyjsondata.o
+release/logininfoinstance.o
+release/filepropertyiinfodialog.o
 release/qrc_image.o
 release/moc_dialog.o
 release/moc_titlewidget.o
@@ -15,3 +17,5 @@ release/moc_mainwindow.o
 release/moc_buttongroup.o
 release/moc_myfile.o
 release/moc_analyjsondata.o
+release/moc_logininfoinstance.o
+release/moc_filepropertyiinfodialog.o

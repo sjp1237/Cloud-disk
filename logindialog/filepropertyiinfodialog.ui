@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>filePropertyiInfoDialog</class>
+ <widget class="QDialog" name="filePropertyiInfoDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>417</width>
+    <height>433</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="lbl_fileName">
+        <property name="text">
+         <string>文件名称：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="val_fileName">
+        <property name="text">
+         <string>文件2</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_2" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="lbl_uploadUser">
+        <property name="text">
+         <string>上传者：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="val_uploadUser">
+        <property name="text">
+         <string>sjp</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_3" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="lbl_uploadTime">
+        <property name="text">
+         <string>上传时间：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="val_uploadTime">
+        <property name="text">
+         <string>时间</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_4" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLabel" name="lbl_fileSize">
+        <property name="text">
+         <string>文件大小：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="val_fileSize">
+        <property name="text">
+         <string>1024kb</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_5" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QLabel" name="lbl_shareStatus">
+        <property name="text">
+         <string>分享状态：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="val_shareStatus">
+        <property name="text">
+         <string>已经分享</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_6" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="lbl_download">
+        <property name="text">
+         <string>下载地址：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="val_download">
+        <property name="text">
+         <string>测试</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_7" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QLabel" name="lbl_pv">
+        <property name="text">
+         <string>下载量：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="val_pv">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

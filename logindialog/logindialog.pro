@@ -35,7 +35,9 @@ SOURCES += \
     buttongroup.cpp \
     myfile.cpp \
     mymenu.cpp \
-    analyjsondata.cpp
+    analyjsondata.cpp \
+    logininfoinstance.cpp \
+    filepropertyiinfodialog.cpp
 
 HEADERS += \
         dialog.h \
@@ -47,14 +49,17 @@ HEADERS += \
     buttongroup.h \
     myfile.h \
     mymenu.h \
-    analyjsondata.h
+    analyjsondata.h \
+    logininfoinstance.h \
+    filepropertyiinfodialog.h
 
 FORMS += \
         dialog.ui \
     titlewidget.ui \
     mainwindow.ui \
     buttongroup.ui \
-    myfile.ui
+    myfile.ui \
+    filepropertyiinfodialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
