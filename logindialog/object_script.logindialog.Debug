@@ -10,6 +10,9 @@ debug/mymenu.o
 debug/analyjsondata.o
 debug/logininfoinstance.o
 debug/filepropertyiinfodialog.o
+debug/uploadwidget.o
+debug/filedataprogress.o
+debug/uploadtask.o
 debug/qrc_image.o
 debug/moc_dialog.o
 debug/moc_titlewidget.o
@@ -19,3 +22,5 @@ debug/moc_myfile.o
 debug/moc_analyjsondata.o
 debug/moc_logininfoinstance.o
 debug/moc_filepropertyiinfodialog.o
+debug/moc_uploadwidget.o
+debug/moc_filedataprogress.o

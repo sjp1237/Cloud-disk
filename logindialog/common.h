@@ -38,6 +38,10 @@ public:
     //md5加密字符串
     QString getStrMd5(QString str);
 
+    //获取文件的md5值
+    QString getFileMd5(QString filePath);
     QNetworkAccessManager* getNetworkManger();
+
+    QString getBoundary();
 };
 #endif // COMMON_H

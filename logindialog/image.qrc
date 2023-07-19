@@ -21,5 +21,11 @@
         <file>res/bk_page1.png</file>
         <file>res/bk_top.png</file>
         <file>res/file.jpg</file>
+        <file>res/upload1.jpg</file>
+        <file>res/upload2.jpg</file>
+        <file>res/111111.png</file>
+        <file>res/jpg.png</file>
+        <file>res/pdf.png</file>
+        <file>res/txt.png</file>
     </qresource>
 </RCC>

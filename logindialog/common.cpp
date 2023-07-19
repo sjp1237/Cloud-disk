@@ -167,5 +167,78 @@ QString Common::getStrMd5(QString str)
     //
     QByteArray arr=QCryptographicHash::hash(str.toLocal8Bit(),QCryptographicHash::Md5);
     return arr.toHex();
+}
 
+
+QString Common::getFileMd5(QString filePath)
+{
+    QFile localFile(filePath);
+
+    if (!localFile.open(QFile::ReadOnly))
+    {
+        qDebug() << "file open error.";
+        return 0;
+    }
+
+    QCryptographicHash ch(QCryptographicHash::Md5);
+
+    quint64 totalBytes = 0;
+    quint64 bytesWritten = 0;
+    quint64 bytesToWrite = 0;
+    quint64 loadSize = 1024 * 4;
+    QByteArray buf;
+
+    totalBytes = localFile.size();
+    bytesToWrite = totalBytes;
+
+    while (1)
+    {
+        if(bytesToWrite > 0)
+        {
+            buf = localFile.read(qMin(bytesToWrite, loadSize));
+            ch.addData(buf);
+            bytesWritten += buf.length();
+            bytesToWrite -= buf.length();
+            buf.resize(0);
+        }
+        else
+        {
+            break;
+        }
+
+        if(bytesWritten == totalBytes)
+        {
+            break;
+        }
+    }
+
+    if (localFile.isOpen()) {
+        localFile.close();
+    }
+    QByteArray md5 = ch.result();
+    return md5.toHex();
+}
+
+
+QString Common::getBoundary() {
+
+    //随机生成16个字符
+    char randoms[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+
+    //随机种子
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+
+    QString temp;
+    int len = strlen(randoms);
+    for (int i=0; i<16; i++) {
+        int rand = qrand() % len;
+        temp[i] = randoms[rand];
+    }
+
+    qDebug() << "temp:" << temp;
+
+    //QString randText = "DQAR0QX1ojAyzAre";  //0-9a-zA-Z
+    QString boundary = "------WebKitFormBoundary" + temp;
+
+    return boundary;
 }

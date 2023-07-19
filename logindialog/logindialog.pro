@@ -37,7 +37,10 @@ SOURCES += \
     mymenu.cpp \
     analyjsondata.cpp \
     logininfoinstance.cpp \
-    filepropertyiinfodialog.cpp
+    filepropertyiinfodialog.cpp \
+    uploadwidget.cpp \
+    filedataprogress.cpp \
+    uploadtask.cpp
 
 HEADERS += \
         dialog.h \
@@ -51,7 +54,10 @@ HEADERS += \
     mymenu.h \
     analyjsondata.h \
     logininfoinstance.h \
-    filepropertyiinfodialog.h
+    filepropertyiinfodialog.h \
+    uploadwidget.h \
+    filedataprogress.h \
+    uploadtask.h
 
 FORMS += \
         dialog.ui \
@@ -59,7 +65,9 @@ FORMS += \
     mainwindow.ui \
     buttongroup.ui \
     myfile.ui \
-    filepropertyiinfodialog.ui
+    filepropertyiinfodialog.ui \
+    uploadwidget.ui \
+    filedataprogress.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

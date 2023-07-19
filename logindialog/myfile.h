@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include<QMenu>
-
+#include<QTimer>
 #include<QNetworkAccessManager>
 #include<QNetworkReply>
 #include<QNetworkRequest>
 #include"common.h"
 #include"logininfoinstance.h"
 #include"analyjsondata.h"
+#include"uploadtask.h"
 namespace Ui {
 class myfile;
 }
@@ -41,16 +42,23 @@ private:
     void shareFile(FileInfo *fileInfo);
     void deleteFile(FileInfo *fileInfo);
     void showFileProperty(FileInfo *fileInfo);
-    void uploadFile();
+
 //    void uploadFile(UploadFileInfo *uploadFileInfo);
     void addUploadFiles();
     void addDownloadFiles();
     void getMd5Str();
 
     void refreshFileList();//显示文件列表
-    void clearFileList();//删除文件信息
-
+    void clearFileList();//删除文件列表信息
     void clearFileItem();//删除文件列表
+
+    //上传文件
+    void addUploadFile();
+    void uploadFileAction();
+    void uploadFile(UploadFileInfo *uploadFileInfo);
+
+
+    void checkTaskList();
 private:
     Ui::myfile *ui;
     QMenu* m_fileMenu;
@@ -74,6 +82,10 @@ private:
 
     QList<FileInfo*> m_fileInfoList;
     int myfileCount=0;
+
+    uploadtask* m_uploadtask;
+
+    QTimer m_uploadTimer;
 };
 
 #endif // MYFILE_H
