@@ -51,7 +51,6 @@ void MainWindow::setSiganlButton()
 
     //切换到用户页面
     connect(ui->butgroup,&buttongroup::userPage,this,[=](){
-
          ui->stackedWidget->setCurrentWidget(ui->user_page);
     });
 }

@@ -16,8 +16,9 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
-#include <buttongroup.h>
-#include <myfile.h>
+#include <transformwidget.h>
+#include "buttongroup.h"
+#include "myfile.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -30,7 +31,7 @@ public:
     myfile *myfile_page;
     QWidget *share_page;
     QWidget *load_page;
-    QWidget *tran_page;
+    transformwidget *tran_page;
     QWidget *switch_page;
     QWidget *user_page;
     buttongroup *butgroup;
@@ -56,7 +57,7 @@ public:
         load_page = new QWidget();
         load_page->setObjectName(QString::fromUtf8("load_page"));
         stackedWidget->addWidget(load_page);
-        tran_page = new QWidget();
+        tran_page = new transformwidget();
         tran_page->setObjectName(QString::fromUtf8("tran_page"));
         stackedWidget->addWidget(tran_page);
         switch_page = new QWidget();
@@ -79,6 +80,9 @@ public:
         MainWindow->setStatusBar(statusbar);
 
         retranslateUi(MainWindow);
+
+        stackedWidget->setCurrentIndex(3);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi

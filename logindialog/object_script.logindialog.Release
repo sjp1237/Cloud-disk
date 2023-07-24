@@ -13,6 +13,10 @@ release/filepropertyiinfodialog.o
 release/uploadwidget.o
 release/filedataprogress.o
 release/uploadtask.o
+release/transformwidget.o
+release/uploadlayout.o
+release/downloadlayout.o
+release/downloadtask.o
 release/qrc_image.o
 release/moc_dialog.o
 release/moc_titlewidget.o
@@ -24,3 +28,4 @@ release/moc_logininfoinstance.o
 release/moc_filepropertyiinfodialog.o
 release/moc_uploadwidget.o
 release/moc_filedataprogress.o
+release/moc_transformwidget.o

@@ -13,6 +13,10 @@ debug/filepropertyiinfodialog.o
 debug/uploadwidget.o
 debug/filedataprogress.o
 debug/uploadtask.o
+debug/transformwidget.o
+debug/uploadlayout.o
+debug/downloadlayout.o
+debug/downloadtask.o
 debug/qrc_image.o
 debug/moc_dialog.o
 debug/moc_titlewidget.o
@@ -24,3 +28,4 @@ debug/moc_logininfoinstance.o
 debug/moc_filepropertyiinfodialog.o
 debug/moc_uploadwidget.o
 debug/moc_filedataprogress.o
+debug/moc_transformwidget.o

@@ -11,6 +11,7 @@
 #include"logininfoinstance.h"
 #include"analyjsondata.h"
 #include"uploadtask.h"
+#include"downloadtask.h"
 namespace Ui {
 class myfile;
 }
@@ -57,6 +58,11 @@ private:
     void uploadFileAction();
     void uploadFile(UploadFileInfo *uploadFileInfo);
 
+    //下载文件
+    void addDownloadFile(FileInfo *fileInfo);
+    void DownloadFileAction();
+    void DownloadFile(UploadFileInfo *uploadFileInfo);
+
 
     void checkTaskList();
 private:
@@ -77,15 +83,16 @@ private:
     QAction *m_uploadAction;       //上传
 
     Common* m_common;
-    logininfoinstance* m_logininfo;
-    QNetworkAccessManager* m_manager;
-
-    QList<FileInfo*> m_fileInfoList;
+    logininfoinstance* m_logininfo; //登录信息
+    QNetworkAccessManager* m_manager; //http管理
+    QList<FileInfo*> m_fileInfoList; //用户的文件信息
     int myfileCount=0;
 
-    uploadtask* m_uploadtask;
-
+    uploadtask* m_uploadtask;//上传文件列表
     QTimer m_uploadTimer;
+
+    downloadtask* m_downloadtask; //下载文件任务列表
+    QTimer m_downloadTimer;
 };
 
 #endif // MYFILE_H

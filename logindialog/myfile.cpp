@@ -8,6 +8,7 @@
 #include"filepropertyiinfodialog.h"
 #include"logininfoinstance.h"
 
+
 //
 myfile::myfile(QWidget *parent) :
     QWidget(parent),
@@ -34,6 +35,12 @@ void myfile::checkTaskList()
     connect(&m_uploadTimer,&QTimer::timeout,this,[=]()
     {
         uploadFileAction();
+    });
+
+    m_downloadTimer.start(500);
+    connect(&m_downloadTimer,&QTimer::timeout,this,[=]()
+    {
+        DownloadFileAction();
     });
 }
 
@@ -332,6 +339,7 @@ void myfile::clearFileItem()
 void myfile::myfileInit()
 {
     m_uploadtask=new uploadtask;
+    m_downloadtask=new downloadtask;
     //设置图标模式
     ui->listWidget->setViewMode(QListView::IconMode);
     //设置在窗口中图片的大小
@@ -381,7 +389,7 @@ void myfile::dealfile(DealFile cmd)
             else if(cmd==DealFile::Download)
             {
                 //下载文件
-
+                addDownloadFile(fileInfo);
             }
         }
     }
@@ -419,70 +427,82 @@ void myfile::uploadFileAction()
     UploadFileInfo* uploadFileInfo=m_uploadtask->takeTask();
     //先进行快传，判断文件是否已经上传成功
     //封装http请求
-    QNetworkRequest request;
-    //从配置文件中获取到ip地址和port端口号
-    QString ip=Common::getInstant()->getConfValue("web_server","ip");
-    QString port=Common::getInstant()->getConfValue("web_server","port");
-    QString url = QString("http://%1:%2/md5").arg(ip).arg(port);
-    request.setUrl(QUrl(url));
 
-    //设置文件类型
-    request.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
-    //将data数据以QJson的格式发送给服务器
+    //如果该文件没有上传，则发送请求
+    if(uploadFileInfo->uploadStatus==UPLOAD_NOT)
+    {
+        uploadFileInfo->uploadStatus=UPLOADING;
+        QNetworkRequest request;
+        //从配置文件中获取到ip地址和port端口号
+        QString ip=Common::getInstant()->getConfValue("web_server","ip");
+        QString port=Common::getInstant()->getConfValue("web_server","port");
+        QString url = QString("http://%1:%2/md5").arg(ip).arg(port);
+        request.setUrl(QUrl(url));
 
-    QJsonObject object;
-    object.insert("user", m_logininfo->user());
-    object.insert("token", m_logininfo->token());
-    object.insert("md5",uploadFileInfo->md5);
-    object.insert("fileName",uploadFileInfo->fileName);
+        //设置文件类型
+        request.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
+        //将data数据以QJson的格式发送给服务器
 
-    QJsonDocument doc(object);
-    QByteArray data=doc.toJson();
-    //发送请求
-   // qDebug()<<data;
-    QNetworkReply* rely=m_manager->post(request,data);
+        QJsonObject object;
+        object.insert("user", m_logininfo->user());
+        object.insert("token", m_logininfo->token());
+        object.insert("md5",uploadFileInfo->md5);
+        object.insert("fileName",uploadFileInfo->fileName);
 
-    connect(rely,&QNetworkReply::readyRead,this,[=]{
-        //响应到达,读取所有的数据
-        QByteArray s=rely->readAll();
-         qDebug() << "服务器返回数据:" << QString(s);
-         //将s数据转换为Json对象
-         QJsonParseError err;
-         QJsonDocument document=QJsonDocument::fromJson(s,&err);
+        QJsonDocument doc(object);
+        QByteArray data=doc.toJson();
+        //发送请求
+       // qDebug()<<data;
+        QNetworkReply* rely=m_manager->post(request,data);
 
-        if(err.error!=QJsonParseError::NoError){
-            qDebug()<<"QJson格式错误";
-            return;
-        }
-        //将QJson字符串转换为QJson对象
-        QJsonObject object1;
-        object1=document.object();
+        connect(rely,&QNetworkReply::readyRead,this,[=]{
+            //响应到达,读取所有的数据
+            QByteArray s=rely->readAll();
+             qDebug() << "服务器返回数据:" << QString(s);
+             //将s数据转换为Json对象
+             QJsonParseError err;
+             QJsonDocument document=QJsonDocument::fromJson(s,&err);
 
-        //获取状态码
-        QString value1=object1["code"].toString();
-        if(value1=="005"){
+            if(err.error!=QJsonParseError::NoError){
+                qDebug()<<"QJson格式错误";
+                return;
+            }
+            //将QJson字符串转换为QJson对象
+            QJsonObject object1;
+            object1=document.object();
 
-            qDebug()<<"文件已经存在";
-            //文件正在上传
+            //获取状态码
+            QString value1=object1["code"].toString();
+            if(value1=="005"){
 
-        }
-        if(value1=="006"){
-            qDebug()<<"妙传成功";
-        }
+                qDebug()<<"文件已经存在";
+                //文件正在上传
+                uploadFileInfo->uploadStatus=UPLOAF_FILE_EXISTE;
+                m_uploadtask->delUploadTask();
+                 Common::getInstant()->writeRecord(m_logininfo->user(),uploadFileInfo->fileName,value1);
+                return;
+            }
+            if(value1=="006"){
+                uploadFileInfo->uploadStatus=UPLOAF_FILE_EXISTE;
+                m_uploadtask->delUploadTask();
+                 Common::getInstant()->writeRecord(m_logininfo->user(),uploadFileInfo->fileName,value1);
+                qDebug()<<"妙传成功";
+            }
 
-        if(value1=="007"){
-            //qDebug()<<"上传文件";
-            //文件没有上传到服务器上，需要将文件上传到服务器上
-            uploadFile(uploadFileInfo);
-        }
+            if(value1=="007"){
+                //qDebug()<<"上传文件";
+                //文件没有上传到服务器上，需要将文件上传到服务器上
+                uploadFile(uploadFileInfo);
 
-        if(value1=="111")
-        {
-            qDebug()<<"token验证失败";
-        }
+            }
 
-
-    });
+            if(value1=="111")
+            {
+                Common::getInstant()->writeRecord(m_logininfo->user(),uploadFileInfo->fileName,value1);
+                qDebug()<<"token验证失败";
+            }
+        });
+    }
 
 }
 
@@ -513,7 +533,6 @@ Content-Type: image/png\r\n
 //将文件内容上传到服务器上
 void myfile::uploadFile(UploadFileInfo *uploadFileInfo)
 {
-
 
         QFile file(uploadFileInfo->filePath);
         file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -559,16 +578,15 @@ void myfile::uploadFile(UploadFileInfo *uploadFileInfo)
         }
 
 
-
         //显示文件上传进度
         connect(reply, &QNetworkReply::uploadProgress, this, [=](qint64 bytesSent, qint64 bytesTotal){
             //bytesSent 上传的字节数
             //bytesTotal 文件需要上传的总字节数
 
-            if (bytesTotal != 0) {
+           if (bytesTotal != 0) {
                 //显示进度条(设置进度条)
-    //            uploadFileInfo->fdp->setProgress(bytesSent/1024, bytesTotal/1024);
-            }
+             uploadFileInfo->fdp->setValue(bytesSent, bytesTotal);
+           }
 
         });
 
@@ -585,7 +603,7 @@ void myfile::uploadFile(UploadFileInfo *uploadFileInfo)
     */
                 //响应到达,读取所有的数据
 
-                 qDebug() << "服务器返回数据:" << QString(s);
+                // qDebug() << "服务器返回数据:" << QString(s);
                  //将s数据转换为Json对象
                  QJsonParseError err;
                  QJsonDocument document=QJsonDocument::fromJson(s,&err);
@@ -602,16 +620,86 @@ void myfile::uploadFile(UploadFileInfo *uploadFileInfo)
                 QString value1=object1["code"].toString();
 
                 if (value1== "008") {
+
                     qDebug() << "上传成功";
-                     getFileCount(Normal);
+                    uploadFileInfo->uploadStatus=UPLOAD_FINISHED;
+                    getFileCount(Normal);
+
 
                 } else if (value1 == "009") {
-                    qDebug() << "上传失败";
 
+                    uploadFileInfo->uploadStatus=UPLOAD_FAILD;
+                    qDebug() << "上传失败";
                 }
+                //将传输记录记录到文件中
+                Common::getInstant()->writeRecord(login->user(),uploadFileInfo->fileName,value1);
+              //   writeRecord(QString user, QString fileName, QString code, QString path)
             }
+            m_uploadtask->delUploadTask();
             reply->deleteLater();
         });
+}
+
+void myfile::addDownloadFile(FileInfo *fileInfo)
+{
+    //添加上传文件
+    //获取文件保存路径，并打开该文件+并判断该路径是否合法
+    QString filePath=QFileDialog::getSaveFileName(this,"请选择路径",fileInfo->fileName);
+
+    //int appendDownloadTask(FileInfo *fileInfo, QString filePath, bool isShareTask);
+    qDebug()<<filePath;
+    m_downloadtask->appendDownloadTask(fileInfo,filePath);
+}
+
+void myfile::DownloadFileAction()
+{
+    if(m_downloadtask->isEmpty()){
+        //任务列表为空
+        // qDebug()<<"任务列表为空";
+        return;
+    }
+
+    DownloadFileInfo* downloadFileInfo=m_downloadtask->takeTask();
+
+    //判断任务是否正在下载
+    if(downloadFileInfo->status==DOWNLOAD_NOT)
+    {
+        downloadFileInfo->status=DOWNLOADING;
+        //先进行快传，判断文件是否已经上传成功
+        //封装http请求
+        QNetworkRequest request;
+        //文件的url: http://172.31.39.20:80/group1/M00/00/00/rB8nFGS9n5KAdiyYADNSzTgsyJg344.doc
+        //172.31.39.20是云服务器上的私网ip，客户端是访问不进去d
+        //119.23.41.13是云服务器上的公网ip
+        //需要将119.23.41.13替换172.31.39.20
+
+        downloadFileInfo->url.replace(7,12,"119.23.41.13");
+        qDebug()<<downloadFileInfo->url;
+        request.setUrl(QUrl(downloadFileInfo->url));
+        QNetworkReply* rely=m_manager->get(request);
+
+         connect(rely,&QNetworkReply::readyRead,this,[=](){
+             //读取数据
+             QByteArray data=rely->readAll();
+             downloadFileInfo->file->write(data);
+         });
+
+         connect(rely,&QNetworkReply::finished,this,[=](){
+             //读取成功，删除下载任务
+             m_downloadtask->delUploadTask();
+         });
+
+         connect(rely,&QNetworkReply::downloadProgress,this,[=](int recvSize,int totalSize){
+             if(totalSize!=0){
+                 downloadFileInfo->fdp->setValue(recvSize,totalSize);
+             }
+         });
+    }
+}
+
+void myfile::DownloadFile(UploadFileInfo *uploadFileInfo)
+{
+
 }
 
 void myfile::shareFile(FileInfo *fileInfo)

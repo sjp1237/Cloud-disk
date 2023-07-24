@@ -17,10 +17,13 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
       <widget class="myfile" name="myfile_page"/>
       <widget class="QWidget" name="share_page"/>
       <widget class="QWidget" name="load_page"/>
-      <widget class="QWidget" name="tran_page"/>
+      <widget class="transformwidget" name="tran_page"/>
       <widget class="QWidget" name="switch_page"/>
       <widget class="QWidget" name="user_page"/>
      </widget>
@@ -36,13 +39,19 @@
   <customwidget>
    <class>buttongroup</class>
    <extends>QWidget</extends>
-   <header location="global">buttongroup.h</header>
+   <header>buttongroup.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>myfile</class>
    <extends>QWidget</extends>
-   <header location="global">myfile.h</header>
+   <header>myfile.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>transformwidget</class>
+   <extends>QWidget</extends>
+   <header location="global">transformwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

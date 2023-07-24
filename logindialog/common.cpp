@@ -3,6 +3,7 @@
 #include"des.h"
 #include<QMap>
 #include<QMessageBox>
+#include<QDir>
 Common::Common()
 {
     m_manger=new QNetworkAccessManager;
@@ -241,4 +242,96 @@ QString Common::getBoundary() {
     QString boundary = "------WebKitFormBoundary" + temp;
 
     return boundary;
+}
+
+
+void Common::writeRecord(QString user, QString fileName, QString code, QString path)
+{
+    qDebug()<<path;
+    QDir dir(path);
+    if(!dir.exists())
+    {
+        //该目录不存在，则创建该目录
+        if(dir.mkpath(path))
+        {
+            qDebug()<<"目录创建成功";
+        }
+        else {
+            qDebug()<<"目录创建失败";
+            return;
+        }
+    }
+
+      // conf/record/milo.txt
+    QString confFileName=QString("%1/%2.txt").arg(path).arg(user);
+    qDebug()<<confFileName;
+    QFile file(confFileName);
+    //先读取文件中的所有数据
+
+    QByteArray s;
+    if(file.exists())
+    {
+       if(file.open(QFile::ReadOnly)){
+           s=file.readAll();
+           file.close();
+       }
+       else {
+           qDebug()<<"打开文件失败";
+           return;
+       }
+  }
+
+    if(file.open(QFile::WriteOnly))
+    {
+        QTime curTime=QTime::currentTime();
+        QString timeStr=curTime.toString("hh:mm:ss");
+
+        QDate curDate=QDate::currentDate();
+        QString dateStr=curDate.toString("yy/MM/dd");
+
+        QString codeDes=getCodeDes(code);
+        //xxx.jpg   2020/11/20 16:02:01 上传成功
+        QString data=QString("%1\t%2\t%3\t%4\r\n").arg(fileName).arg(dateStr).arg(timeStr).arg(codeDes);
+
+        QString data1=QString("%1\t%2\t%3\t%4\r\n").arg("文件").arg("日期").arg("时间").arg("状态");
+        file.write(data.toLocal8Bit());
+        if(s.size()!=0)
+        {
+             file.write(s);
+        }
+
+        file.close();
+    }
+}
+
+QString Common::getCodeDes(QString code)
+{
+
+        /*
+        005：上传的文件已存在
+        006: 秒传成功
+        007: 秒传失败
+        008: 上传成功
+        009: 上传失败
+        090: 下载成功
+        091: 下载失败
+        */
+        QString str;
+        if (code == "005") {
+            str = "上传的文件已存在";
+        } else if (code == "006") {
+            str = "秒传成功";
+        } else if (code == "007") {
+            str = "秒传失败";
+        } else if (code == "008") {
+            str = "上传成功";
+        } else if (code == "009") {
+            str = "上传失败";
+        } else if (code == "090") {
+            str = "下载成功";
+        } else if (code == "091") {
+            str = "下载失败";
+        }
+
+        return str;
 }

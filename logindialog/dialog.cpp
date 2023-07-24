@@ -125,6 +125,7 @@ void Dialog::on_login_toolButton_clicked()
     //封装http请求
     QNetworkRequest request;
     //从配置文件中获取到ip地址和port端口号
+
     QString ip=Common::getInstant()->getConfValue("web_server","ip");
     QString port=Common::getInstant()->getConfValue("web_server","port");
     QString url=QString("http://%1:%2/login").arg(ip).arg(port);//设置登录的url

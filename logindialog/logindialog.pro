@@ -40,7 +40,11 @@ SOURCES += \
     filepropertyiinfodialog.cpp \
     uploadwidget.cpp \
     filedataprogress.cpp \
-    uploadtask.cpp
+    uploadtask.cpp \
+    transformwidget.cpp \
+    uploadlayout.cpp \
+    downloadlayout.cpp \
+    downloadtask.cpp
 
 HEADERS += \
         dialog.h \
@@ -57,7 +61,12 @@ HEADERS += \
     filepropertyiinfodialog.h \
     uploadwidget.h \
     filedataprogress.h \
-    uploadtask.h
+    uploadtask.h \
+    transformwidget.h \
+    uploadlayout.h \
+    downloadlayout.h \
+    downloadtask.h \
+    fileinfo.h
 
 FORMS += \
         dialog.ui \
@@ -67,7 +76,8 @@ FORMS += \
     myfile.ui \
     filepropertyiinfodialog.ui \
     uploadwidget.ui \
-    filedataprogress.ui
+    filedataprogress.ui \
+    transformwidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

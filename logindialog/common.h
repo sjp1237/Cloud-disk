@@ -17,13 +17,12 @@
 
 
 #define CONF_FILE "./conf/cfg.json" //配置文件的路径
-
+#define RECORD_DIR "conf/record"   //用户传输记录的路径
 class Common
 {
     static Common* instant;
     QNetworkAccessManager* m_manger;
 public:
-    Common();
     static Common* getInstant();
     //读取文件数据
     //title
@@ -42,6 +41,18 @@ public:
     QString getFileMd5(QString filePath);
     QNetworkAccessManager* getNetworkManger();
 
-    QString getBoundary();
+    QString getBoundary();//生成一个文件的边界
+
+    //传输数据记录到本地文件
+    //user:操作用户
+    //fileName:操作的文件
+    //code:操作码
+    //path:文件保存的路径
+    void writeRecord(QString user, QString fileName, QString code, QString path = RECORD_DIR);
+
+
+    QString getCodeDes(QString code);
+     Common(Common&)=delete;
+     Common();
 };
 #endif // COMMON_H
