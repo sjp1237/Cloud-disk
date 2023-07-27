@@ -28,6 +28,9 @@
    </property>
    <item>
     <widget class="QToolButton" name="user_btn">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="minimumSize">
       <size>
        <width>70</width>
@@ -62,7 +65,7 @@
     <widget class="QToolButton" name="myfile_btn">
      <property name="minimumSize">
       <size>
-       <width>50</width>
+       <width>70</width>
        <height>50</height>
       </size>
      </property>
@@ -109,7 +112,7 @@
     <widget class="QToolButton" name="share_btn">
      <property name="minimumSize">
       <size>
-       <width>60</width>
+       <width>70</width>
        <height>75</height>
       </size>
      </property>
@@ -129,44 +132,6 @@
      <property name="icon">
       <iconset resource="image.qrc">
        <normaloff>:/res/title_share.png</normaloff>:/res/title_share.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="toolButtonStyle">
-      <enum>Qt::ToolButtonTextUnderIcon</enum>
-     </property>
-     <property name="autoRaise">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="load_btn">
-     <property name="minimumSize">
-      <size>
-       <width>70</width>
-       <height>75</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>70</width>
-       <height>75</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 9pt &quot;黑体&quot;;</string>
-     </property>
-     <property name="text">
-      <string>下载</string>
-     </property>
-     <property name="icon">
-      <iconset resource="image.qrc">
-       <normaloff>:/res/title_hot.png</normaloff>:/res/title_hot.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -265,6 +230,9 @@
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>

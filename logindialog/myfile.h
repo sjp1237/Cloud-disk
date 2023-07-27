@@ -19,7 +19,7 @@ class myfile;
 class myfile : public QWidget
 {
     Q_OBJECT
-
+      enum MyFileDisplay { Normal, Asc, Desc};
 public:
     explicit myfile(QWidget *parent = nullptr);
     ~myfile();
@@ -30,19 +30,18 @@ public:
 
     void setActionConnect();
 
-
-
+    void showMyfile();
+     void changerUser();
 private:
-    enum MyFileDisplay { Normal, Asc, Desc};
     enum DealFile{Share,Delete,Download,Show};
-
     void getFileCount(MyFileDisplay cmd=Normal);
     void getFileList(MyFileDisplay cmd=Normal);
-
     void dealfile(DealFile cmd);
-    void shareFile(FileInfo *fileInfo);
-    void deleteFile(FileInfo *fileInfo);
-    void showFileProperty(FileInfo *fileInfo);
+    void shareFile(FileInfo *fileInfo);//分析文件
+    void deleteFile(FileInfo *fileInfo,int index);//删除文件
+    void showFileProperty(FileInfo *fileInfo);//显示文件属性
+
+
 
 //    void uploadFile(UploadFileInfo *uploadFileInfo);
     void addUploadFiles();
@@ -52,6 +51,7 @@ private:
     void refreshFileList();//显示文件列表
     void clearFileList();//删除文件列表信息
     void clearFileItem();//删除文件列表
+
 
     //上传文件
     void addUploadFile();

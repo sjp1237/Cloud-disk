@@ -1,6 +1,16 @@
 #include "downloadtask.h"
 #include"downloadlayout.h"
-downloadtask::downloadtask()
+
+
+ downloadtask* downloadtask::instant=new downloadtask;
+
+
+ downloadtask *downloadtask::getInstant()
+ {
+     return  instant;
+ }
+
+ downloadtask::downloadtask()
 {
 
 }
@@ -69,7 +79,6 @@ void downloadtask::delUploadTask()
         }
 
         delete file;
-
         delete temp;
     }
 
@@ -78,5 +87,23 @@ void downloadtask::delUploadTask()
 //清空列表
 void downloadtask::clearList()
 {
+    int len=m_filelist.size();
+    for(int i=0;i<len;i++)
+    {
+        DownloadFileInfo* temp=m_filelist.at(0);
+        if(temp!=nullptr)
+        {
+            m_filelist.removeAt(0);
+            downloadLayout::getInstant()->getVLayout()->removeWidget(temp->fdp);
+            delete temp->fdp;
+            QFile* file=temp->file;
+            if(file->isOpen()){
+                file->close();
+            }
 
+            delete file;
+            delete temp;
+        }
+
+    }
 }

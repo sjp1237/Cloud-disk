@@ -27,7 +27,6 @@ public:
     QToolButton *user_btn;
     QToolButton *myfile_btn;
     QToolButton *share_btn;
-    QToolButton *load_btn;
     QToolButton *tran_btn;
     QToolButton *switch_btn;
     QSpacerItem *horizontalSpacer;
@@ -50,6 +49,7 @@ public:
         horizontalLayout_2->setContentsMargins(11, 0, 0, -1);
         user_btn = new QToolButton(buttongroup);
         user_btn->setObjectName(QString::fromUtf8("user_btn"));
+        user_btn->setEnabled(false);
         user_btn->setMinimumSize(QSize(70, 60));
         user_btn->setStyleSheet(QString::fromUtf8("font: 9pt \"\351\273\221\344\275\223\";"));
         QIcon icon;
@@ -63,7 +63,7 @@ public:
 
         myfile_btn = new QToolButton(buttongroup);
         myfile_btn->setObjectName(QString::fromUtf8("myfile_btn"));
-        myfile_btn->setMinimumSize(QSize(50, 50));
+        myfile_btn->setMinimumSize(QSize(70, 50));
         myfile_btn->setMaximumSize(QSize(70, 75));
         myfile_btn->setMouseTracking(false);
         myfile_btn->setTabletTracking(false);
@@ -80,7 +80,7 @@ public:
 
         share_btn = new QToolButton(buttongroup);
         share_btn->setObjectName(QString::fromUtf8("share_btn"));
-        share_btn->setMinimumSize(QSize(60, 75));
+        share_btn->setMinimumSize(QSize(70, 75));
         share_btn->setMaximumSize(QSize(70, 75));
         share_btn->setStyleSheet(QString::fromUtf8("font: 9pt \"\351\273\221\344\275\223\";\n"
 ""));
@@ -93,28 +93,14 @@ public:
 
         horizontalLayout_2->addWidget(share_btn);
 
-        load_btn = new QToolButton(buttongroup);
-        load_btn->setObjectName(QString::fromUtf8("load_btn"));
-        load_btn->setMinimumSize(QSize(70, 75));
-        load_btn->setMaximumSize(QSize(70, 75));
-        load_btn->setStyleSheet(QString::fromUtf8("font: 9pt \"\351\273\221\344\275\223\";"));
-        QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/res/title_hot.png"), QSize(), QIcon::Normal, QIcon::Off);
-        load_btn->setIcon(icon3);
-        load_btn->setIconSize(QSize(50, 50));
-        load_btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        load_btn->setAutoRaise(true);
-
-        horizontalLayout_2->addWidget(load_btn);
-
         tran_btn = new QToolButton(buttongroup);
         tran_btn->setObjectName(QString::fromUtf8("tran_btn"));
         tran_btn->setMinimumSize(QSize(70, 75));
         tran_btn->setMaximumSize(QSize(70, 75));
         tran_btn->setStyleSheet(QString::fromUtf8("font: 9pt \"\351\273\221\344\275\223\";"));
-        QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/res/title_data.png"), QSize(), QIcon::Normal, QIcon::Off);
-        tran_btn->setIcon(icon4);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/res/title_data.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tran_btn->setIcon(icon3);
         tran_btn->setIconSize(QSize(50, 50));
         tran_btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         tran_btn->setAutoRaise(true);
@@ -126,9 +112,9 @@ public:
         switch_btn->setMinimumSize(QSize(70, 75));
         switch_btn->setMaximumSize(QSize(70, 75));
         switch_btn->setStyleSheet(QString::fromUtf8("font: 9pt \"\351\273\221\344\275\223\";"));
-        QIcon icon5;
-        icon5.addFile(QString::fromUtf8(":/res/title_change.png"), QSize(), QIcon::Normal, QIcon::Off);
-        switch_btn->setIcon(icon5);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/res/title_change.png"), QSize(), QIcon::Normal, QIcon::Off);
+        switch_btn->setIcon(icon4);
         switch_btn->setIconSize(QSize(50, 50));
         switch_btn->setPopupMode(QToolButton::DelayedPopup);
         switch_btn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -188,7 +174,6 @@ public:
         user_btn->setText(QApplication::translate("buttongroup", "\346\270\270\345\256\242", nullptr));
         myfile_btn->setText(QApplication::translate("buttongroup", "\346\210\221\347\232\204\346\226\207\344\273\266", nullptr));
         share_btn->setText(QApplication::translate("buttongroup", "\345\205\261\344\272\253\345\210\227\350\241\250", nullptr));
-        load_btn->setText(QApplication::translate("buttongroup", "\344\270\213\350\275\275", nullptr));
         tran_btn->setText(QApplication::translate("buttongroup", "\344\274\240\350\276\223\345\210\227\350\241\250", nullptr));
         switch_btn->setText(QApplication::translate("buttongroup", "\345\210\207\346\215\242\347\224\250\346\210\267", nullptr));
         hide_but1->setText(QString());

@@ -76,8 +76,16 @@ void uploadtask::delUploadTask()
     }
 }
 
-//清空列表
+//清空任务列表
 void uploadtask::clearList()
 {
-
+    int len=m_filelist.size();
+    for(int i=0;i<len;i++)
+    {
+        UploadFileInfo* temp=m_filelist.at(0);
+        m_filelist.removeAt(0);
+        uploadlayout::getInstant()->getVLayout()->removeWidget(temp->fdp);//将进度条从布局中移除
+        delete temp->fdp;
+        delete temp;
+    }
 }

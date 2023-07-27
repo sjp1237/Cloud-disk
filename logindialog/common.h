@@ -28,10 +28,10 @@ public:
     //title
     QString getConfValue(QString title, QString key, QString path=CONF_FILE);
 
-    //写入数据到文件
+    //用户信息 写入到配置文件
     void writeLoginInfo(QString user, QString pwd, bool isRemeber, QString path=CONF_FILE);
 
-    // 服务器信息，写入配置文件
+    // 服务器信息写入到配置文件
     void writeWebInfo(QString ip, QString port, QString path=CONF_FILE);
 
     //md5加密字符串

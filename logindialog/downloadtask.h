@@ -27,6 +27,9 @@ struct DownloadFileInfo
 class downloadtask
 {
 public:
+    static downloadtask* getInstant();
+
+public:
     downloadtask();
     //添加文件到上传任务列表中
     int appendDownloadTask(FileInfo *fileInfo, QString filePath, bool isShareTask=false);
@@ -43,7 +46,7 @@ public:
     //清空列表
     void clearList();
 
-
+      static downloadtask* instant;
 private:
     QList<DownloadFileInfo*> m_filelist;
 };

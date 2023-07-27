@@ -74,7 +74,7 @@ void Common::writeLoginInfo(QString user, QString pwd, bool isRemeber, QString p
         qDebug()<<"账号加密失败";
         return;
     }
-    unsigned char pwd_data[1024];
+    unsigned char pwd_data[1024]={0};
     int length2=0;
     res=DesEnc((unsigned char*)pwd.toLocal8Bit().data(),pwd.toLocal8Bit().length(),pwd_data,&length2);
 
@@ -315,6 +315,7 @@ QString Common::getCodeDes(QString code)
         009: 上传失败
         090: 下载成功
         091: 下载失败
+        013:  删除成功
         */
         QString str;
         if (code == "005") {
@@ -331,6 +332,11 @@ QString Common::getCodeDes(QString code)
             str = "下载成功";
         } else if (code == "091") {
             str = "下载失败";
+        }else if(code=="013")
+        {
+            str="删除成功";
+        }else if(code=="004"){
+            str="删除失败";
         }
 
         return str;

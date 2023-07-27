@@ -160,6 +160,7 @@ public:
         password_edit->setObjectName(QString::fromUtf8("password_edit"));
         password_edit->setMinimumSize(QSize(0, 30));
         password_edit->setMaximumSize(QSize(250, 16777215));
+        password_edit->setEchoMode(QLineEdit::Password);
 
         gridLayout->addWidget(password_edit, 2, 1, 1, 1);
 
@@ -513,7 +514,7 @@ public:
 
         retranslateUi(Dialog);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(Dialog);

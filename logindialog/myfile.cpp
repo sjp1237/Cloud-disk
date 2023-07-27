@@ -27,6 +27,10 @@ myfile::myfile(QWidget *parent) :
 
     getFileCount(Normal);//获取文件列表
     checkTaskList();
+
+    QIcon icon(":/res/111111.png");
+    QListWidgetItem* item1=new QListWidgetItem(icon,"上传文件");
+    ui->listWidget->addItem(item1);
 }
 
 void myfile::checkTaskList()
@@ -65,7 +69,6 @@ void myfile::setWidgetMemu()
             qDebug()<<"选中文件";//显示菜单栏
         }
     });
-
 }
 
 
@@ -154,6 +157,11 @@ void myfile::setActionConnect()
     });
 }
 
+void myfile::showMyfile()
+{
+    getFileCount(MyFileDisplay::Normal);
+}
+
 
 //http://119.23.41.13/myfiles?cmd=count
 //获取文件数量
@@ -215,6 +223,7 @@ void myfile::getFileCount(MyFileDisplay cmd)
             //获取失败
             qDebug()<<"获取文件失败";
         }
+         rely->deleteLater();
     });
 }
 
@@ -339,7 +348,7 @@ void myfile::clearFileItem()
 void myfile::myfileInit()
 {
     m_uploadtask=new uploadtask;
-    m_downloadtask=new downloadtask;
+    m_downloadtask=downloadtask::getInstant();
     //设置图标模式
     ui->listWidget->setViewMode(QListView::IconMode);
     //设置在窗口中图片的大小
@@ -379,7 +388,7 @@ void myfile::dealfile(DealFile cmd)
             else if(cmd==DealFile::Delete)
             {
                 //删除文件
-                deleteFile(fileInfo);
+                deleteFile(fileInfo,i);
             }
             else if(cmd==DealFile::Show)
             {
@@ -402,6 +411,21 @@ void myfile::showFileProperty(FileInfo *fileInfo)
     filePropertyiInfoDialog* dialog=new filePropertyiInfoDialog();
     dialog->setFileInfo(fileInfo);
     dialog->show();
+}
+
+void myfile::changerUser()
+{
+    /*清除所有的文件信息
+     * 清除所有的item
+     * 清除所有的上传列表和下载列表
+     *
+     * */
+
+   clearFileList();
+   clearFileItem();
+
+   m_downloadtask->clearList();
+   m_uploadtask->clearList();
 }
 
 
@@ -478,14 +502,16 @@ void myfile::uploadFileAction()
                 qDebug()<<"文件已经存在";
                 //文件正在上传
                 uploadFileInfo->uploadStatus=UPLOAF_FILE_EXISTE;
+                Common::getInstant()->writeRecord(m_logininfo->user(),uploadFileInfo->fileName,value1);
                 m_uploadtask->delUploadTask();
-                 Common::getInstant()->writeRecord(m_logininfo->user(),uploadFileInfo->fileName,value1);
+
                 return;
             }
             if(value1=="006"){
                 uploadFileInfo->uploadStatus=UPLOAF_FILE_EXISTE;
-                m_uploadtask->delUploadTask();
                  Common::getInstant()->writeRecord(m_logininfo->user(),uploadFileInfo->fileName,value1);
+                m_uploadtask->delUploadTask();
+
                 qDebug()<<"妙传成功";
             }
 
@@ -697,17 +723,162 @@ void myfile::DownloadFileAction()
     }
 }
 
+
+
+
 void myfile::DownloadFile(UploadFileInfo *uploadFileInfo)
 {
 
 }
 
+
+//http://192.168.52.139/dealfile?cmd=share
+/*
+{
+    "filename": "Makefile",
+    "md5": "602fdf30db2aacf517badf4565124f51",
+    "token": "ecf3ac6f8863cd17ed1d3909c4386684",
+    "user": "milo"
+}
+*/
 void myfile::shareFile(FileInfo *fileInfo)
 {
+    //封装http请求
+    QNetworkRequest request;
+    //从配置文件中获取到ip地址和port端口号
+    QString ip=Common::getInstant()->getConfValue("web_server","ip");
+    QString port=Common::getInstant()->getConfValue("web_server","port");
 
+     QString url = QString("http://%1:%2/dealfile?cmd=share").arg(ip).arg(port);
+
+    request.setUrl(QUrl(url));
+
+    //设置文件类型
+    request.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
+    //将data数据以QJson的格式发送给服务器
+
+    QJsonObject object;
+    object.insert("user", m_logininfo->user());
+    object.insert("token", m_logininfo->token());
+    object.insert("filename", fileInfo->fileName);
+    object.insert("md5", fileInfo->md5);
+    QJsonDocument doc(object);
+    QByteArray data=doc.toJson();
+    //发送请求
+   // qDebug()<<data;
+    QNetworkReply* rely=m_manager->post(request,data);
+    connect(rely,&QNetworkReply::readyRead,this,[=](){
+        //响应到达,读取所有的数据
+        QByteArray s=rely->readAll();
+
+         //将s数据转换为Json对象
+         QJsonParseError err;
+         QJsonDocument document=QJsonDocument::fromJson(s,&err);
+        if(err.error!=QJsonParseError::NoError){
+            qDebug()<<"QJson格式错误";
+            return;
+        }
+        //将QJson字符串转换为QJson对象
+        QJsonObject object1;
+        object1=document.object();
+        //获取状态码
+        QString value1=object1["code"].toString();
+        if(value1=="010"){
+             //分享成功
+            QMessageBox::information(this,"提示","分享成功");
+
+        }
+        else if(value1=="011"){
+            //分享失败
+            QMessageBox::warning(this,"警告","分享失败");
+        }
+        else if(value1=="012"){
+            //该文件已经分享过了
+             QMessageBox::information(this,"提示","该文件已经分享过了");
+        }
+        else if(value1=="113"){
+            //token验证失败
+        }
+         rely->deleteLater();
+});
 }
-void myfile::deleteFile(FileInfo *fileInfo)
+
+
+/*http://192.168.52.139/dealfile?cmd=del
+ *     {
+        "filename": "Makefile",
+        "md5": "602fdf30db2aacf517badf4565124f51",
+        "token": "ecf3ac6f8863cd17ed1d3909c4386684",
+        "user": "milo"
+    }
+ *
+ * */
+void myfile::deleteFile(FileInfo *fileInfo,int index)
 {
+    //封装http请求
+    QNetworkRequest request;
+    //从配置文件中获取到ip地址和port端口号
+    QString ip=Common::getInstant()->getConfValue("web_server","ip");
+    QString port=Common::getInstant()->getConfValue("web_server","port");
+
+     QString url = QString("http://%1:%2/dealfile?cmd=del").arg(ip).arg(port);
+
+    request.setUrl(QUrl(url));
+
+    //设置文件类型
+    request.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
+    //将data数据以QJson的格式发送给服务器
+
+    QJsonObject object;
+    object.insert("user", m_logininfo->user());
+    object.insert("token", m_logininfo->token());
+    object.insert("filename", fileInfo->fileName);
+    object.insert("md5", fileInfo->md5);
+    QJsonDocument doc(object);
+    QByteArray data=doc.toJson();
+    //发送请求
+   // qDebug()<<data;
+    QNetworkReply* rely=m_manager->post(request,data);
+    connect(rely,&QNetworkReply::readyRead,this,[=](){
+        //响应到达,读取所有的数据
+        QByteArray s=rely->readAll();
+
+         //将s数据转换为Json对象
+         QJsonParseError err;
+         QJsonDocument document=QJsonDocument::fromJson(s,&err);
+        if(err.error!=QJsonParseError::NoError){
+            qDebug()<<"QJson格式错误";
+            return;
+        }
+        //将QJson字符串转换为QJson对象
+        QJsonObject object1;
+        object1=document.object();
+        //获取状态码
+        QString value1=object1["code"].toString();
+        if(value1=="013"){
+            //删除成功
+            QMessageBox::information(this,"提示","成功删除文件");
+            //1.删除QItem
+            //2.删除文件列表中的文件信息
+            //3.记录文件信息
+            QListWidgetItem* item=ui->listWidget->currentItem();
+
+            m_fileInfoList.removeAt(index);//将文件信息从m_fileInfoList移除
+            delete fileInfo;
+
+            //刷新界面
+            clearFileItem();//清除界面中的所有item
+            refreshFileList();
+        }
+        else if(value1=="004"){\
+            QMessageBox::warning(this,"警告","删除失败");
+        }
+        else if(value1=="111"){
+
+        }
+ //       Common::getInstant()->writeRecord(m_logininfo->user(),fileInfo->fileName,value1);
+        rely->deleteLater();
+    });
 
 }
 

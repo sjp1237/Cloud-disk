@@ -18,10 +18,10 @@
     <item row="1" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="myfile" name="myfile_page"/>
-      <widget class="QWidget" name="share_page"/>
+      <widget class="ShareFileWidget" name="share_page"/>
       <widget class="QWidget" name="load_page"/>
       <widget class="transformwidget" name="tran_page"/>
       <widget class="QWidget" name="switch_page"/>
@@ -52,6 +52,12 @@
    <class>transformwidget</class>
    <extends>QWidget</extends>
    <header location="global">transformwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ShareFileWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">sharefilewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

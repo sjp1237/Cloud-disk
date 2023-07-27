@@ -24,20 +24,18 @@ void buttongroup::on_toolButton_8_clicked()
 void buttongroup::on_myfile_btn_clicked()
 {
    ui->user_btn->setStyleSheet("color:black");
-   ui->load_btn->setStyleSheet("color:black");
    ui->share_btn->setStyleSheet("color:black");
    ui->myfile_btn->setStyleSheet("color:white");
    ui->tran_btn->setStyleSheet("color:black");
    ui->switch_btn->setStyleSheet("color:black");
    ui->user_btn->setStyleSheet("color:black");
-    emit myfilePage();
+   emit myfilePage();
 }
 
 //分享文件按钮
 void buttongroup::on_share_btn_clicked()
 {
-     ui->user_btn->setStyleSheet("color:black");
-    ui->load_btn->setStyleSheet("color:black");
+    ui->user_btn->setStyleSheet("color:black");
     ui->share_btn->setStyleSheet("color:white");
     ui->myfile_btn->setStyleSheet("color:black");
     ui->tran_btn->setStyleSheet("color:black");
@@ -49,8 +47,7 @@ void buttongroup::on_share_btn_clicked()
 //下载榜按钮
 void buttongroup::on_load_btn_clicked()
 {
-     ui->user_btn->setStyleSheet("color:black");
-    ui->load_btn->setStyleSheet("color:white");
+     ui->user_btn->setStyleSheet("color:black"); 
     ui->share_btn->setStyleSheet("color:black");
     ui->myfile_btn->setStyleSheet("color:black");
     ui->tran_btn->setStyleSheet("color:black");
@@ -62,7 +59,6 @@ void buttongroup::on_load_btn_clicked()
 void buttongroup::on_tran_btn_clicked()
 {
     ui->user_btn->setStyleSheet("color:black");
-    ui->load_btn->setStyleSheet("color:black");
     ui->share_btn->setStyleSheet("color:black");
     ui->myfile_btn->setStyleSheet("color:black");
     ui->tran_btn->setStyleSheet("color:white");
@@ -79,7 +75,6 @@ void buttongroup::on_switch_btn_clicked()
 void buttongroup::on_user_btn_clicked()
 {
     ui->user_btn->setStyleSheet("color:white");
-    ui->load_btn->setStyleSheet("color:black");
     ui->share_btn->setStyleSheet("color:black");
     ui->myfile_btn->setStyleSheet("color:black");
     ui->tran_btn->setStyleSheet("color:black");

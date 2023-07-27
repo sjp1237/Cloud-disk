@@ -35,13 +35,15 @@ Dialog::Dialog(QWidget *parent) :
 //创建主界面，并显示主界面
 void Dialog::showMainWindow(QString account)
 {
-    //显示主页面
-    mainwindow=new MainWindow();
-    mainwindow->setUser(account);
-    mainwindow->show();
-    this->hide();
+    //获取主页面
+    mainwindow=MainWindow::getinstant();
+    mainwindow->setUser(account);//将用户名显示到主页面上
+    mainwindow->show();//显示主页面
+    mainwindow->init();
+    this->hide();//隐藏主页面
     connect(mainwindow,&MainWindow::switchUser,this,[=](){
         mainwindow->hide();
+
         this->show();
     });
 }
@@ -171,14 +173,13 @@ void Dialog::on_login_toolButton_clicked()
 
              //获取token
             QString token=object1["token"].toString();
-                qDebug()<<"token:"<<token;
+            //    qDebug()<<"token:"<<token;
             //获取token，将用户信息写入到logininstant中。
             saveLoginInfoData(account,token,ip,port);
 
 
             // QMessageBox::information(this,"登录成功","账号登录成功");
-            //判断有没有记住密码
-            bool checkBox=ui->rember_checkBox->isChecked();
+            bool checkBox=ui->rember_checkBox->isChecked();//选中密码框
             if(checkBox==false)
             {
                 //没有记住密码直接清除密码框
@@ -195,6 +196,7 @@ void Dialog::on_login_toolButton_clicked()
         if(value1=="001"){
             QMessageBox::warning(this,"警告","登录");
         }
+         rely->deleteLater();
     });
 
 }
@@ -239,7 +241,7 @@ void Dialog::saveLoginInfoData(QString username, QString token, QString ip, QStr
          unsigned char pwd[1024]={0};
          int pwd_len=0;
          //进行desc解密
-         if(DesDec((unsigned char*)pwd_des.data(),usr_des.length(),pwd,&pwd_len)!=0){
+         if(DesDec((unsigned char*)pwd_des.data(),pwd_des.length(),pwd,&pwd_len)!=0){
              qDebug()<<"密码解密失败";
          }
 
@@ -285,6 +287,8 @@ void Dialog::on_ok_button_clicked()
     }
 
     m_common->writeWebInfo(ip,port);
+    QMessageBox::warning(this,"提示","配置成功");
+    ui->stackedWidget->setCurrentWidget(ui->login_page);
     return;
 }
 
@@ -391,7 +395,7 @@ void Dialog::on_reg_but_clicked()
             //获取状态码
             QString value1=object1["code"].toString();
             if(value1=="002"){
-                QMessageBox::information(this,"注册成功","账号注册成功");
+                QMessageBox::information(this,"提示","账号注册成功");
             }
 
             if(value1=="003"){
@@ -401,5 +405,6 @@ void Dialog::on_reg_but_clicked()
             if(value1=="004"){
                 QMessageBox::critical(this,"注册失败","注册失败");
             }
+             rely->deleteLater();
        });
 }

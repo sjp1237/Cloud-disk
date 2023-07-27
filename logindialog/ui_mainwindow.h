@@ -16,6 +16,7 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
+#include <sharefilewidget.h>
 #include <transformwidget.h>
 #include "buttongroup.h"
 #include "myfile.h"
@@ -29,7 +30,7 @@ public:
     QGridLayout *gridLayout;
     QStackedWidget *stackedWidget;
     myfile *myfile_page;
-    QWidget *share_page;
+    ShareFileWidget *share_page;
     QWidget *load_page;
     transformwidget *tran_page;
     QWidget *switch_page;
@@ -51,7 +52,7 @@ public:
         myfile_page = new myfile();
         myfile_page->setObjectName(QString::fromUtf8("myfile_page"));
         stackedWidget->addWidget(myfile_page);
-        share_page = new QWidget();
+        share_page = new ShareFileWidget();
         share_page->setObjectName(QString::fromUtf8("share_page"));
         stackedWidget->addWidget(share_page);
         load_page = new QWidget();
@@ -81,7 +82,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

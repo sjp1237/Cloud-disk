@@ -44,7 +44,8 @@ SOURCES += \
     transformwidget.cpp \
     uploadlayout.cpp \
     downloadlayout.cpp \
-    downloadtask.cpp
+    downloadtask.cpp \
+    sharefilewidget.cpp
 
 HEADERS += \
         dialog.h \
@@ -66,7 +67,8 @@ HEADERS += \
     uploadlayout.h \
     downloadlayout.h \
     downloadtask.h \
-    fileinfo.h
+    fileinfo.h \
+    sharefilewidget.h
 
 FORMS += \
         dialog.ui \
@@ -77,7 +79,8 @@ FORMS += \
     filepropertyiinfodialog.ui \
     uploadwidget.ui \
     filedataprogress.ui \
-    transformwidget.ui
+    transformwidget.ui \
+    sharefilewidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
